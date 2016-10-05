@@ -84,9 +84,8 @@ module.exports = function(RED) {
 			this.status({fill:"red", shape:"ring", text:"diconnected"});
         });
 	}
-	console.log("regstering listpresets");
 	RED.nodes.registerType("listpresets", eventMasterListPresets);
-	console.log("regstered listpresets");
+	console.log("regstered list presets");
 
 	function eventMasterListDestinationsForPreset( n ) {
 
@@ -154,7 +153,7 @@ module.exports = function(RED) {
         });
 	}
 	RED.nodes.registerType("listdestinationsforpreset", eventMasterListDestinationsForPreset);
-	console.log("regstering listdestinationsforpreset");
+	console.log("registered listdestinationsforpreset");
 
 	function eventMasterActivatePreset( n ) {
 
@@ -200,10 +199,10 @@ module.exports = function(RED) {
 	       		var type = node.presettype;
 
 	       		if( msg.topic ) {
-	       			if( msg.topic == "eventmaster/activatepreset/preview") {
+	       			if( msg.topic.indexof("preview") != -1) {
 						id = msg.payload;
 						type = -1;
-					} else if(msg.topic == "eventmaster/activatepreset/program") {
+					} else if(msg.topic.indexof("program") != -1) {
 						id = msg.payload;
 						type = 0;
 					}
@@ -363,7 +362,6 @@ module.exports = function(RED) {
 	RED.nodes.registerType("cut", eventMasterCut);
     console.log("registered cut");
 
-/*
 	function eventMasterDeletePreset( n ) {
 
 		RED.nodes.createNode(this, n);
@@ -428,7 +426,7 @@ module.exports = function(RED) {
 			this.status({fill:"red", shape:"ring", text:"diconnected"});
         });
 	}
-	console.log("regstering deletepreset");
+	console.log("registered deletepreset");
 	RED.nodes.registerType("deletepreset", eventMasterDeletePreset);
 
 	function eventMasterSavePreset( n ) {
@@ -444,7 +442,7 @@ module.exports = function(RED) {
 		node.presetName = n.presetName;
 		node.screenDest = n.screenDestination;
 		
-		console.log(`deletepreset id= ${node.presetid}`);
+		console.log(`savepreset id= ${node.presetid}`);
 
 		if (node.addr== "") {
             node.warn("EventMaster: ip address not set");
@@ -473,10 +471,10 @@ module.exports = function(RED) {
 	        	var id = node.presetid;
 
 	 			node.client.call(
-	      			{"jsonrpc": "2.0", "method": "deletePreset", "params": [id], "id": 1234},
+	      			{"jsonrpc": "2.0", "method": "savePreset", "params": [id], "id": 1234},
 	      			function (err, res) {
 	          			// Did it all work ? 
-	          			if (err) { console.log(`deletepreset - Error on JSON-RPC call ${err}`); }
+	          			if (err) { console.log(`savepreset - Error on JSON-RPC call ${err}`); }
 	          			else { 
 	          				var msg = { 
 	          					topic: "",
@@ -484,7 +482,7 @@ module.exports = function(RED) {
 	          					ip: node.addr,
 	          					port: node.port 
 	          				}; 
-	          				console.log(`deletepreset - success!` ); 
+	          				console.log(`savepreset - success!` ); 
 	          				node.send( msg);
 	          			}
 	          		}
@@ -496,8 +494,8 @@ module.exports = function(RED) {
 			this.status({fill:"red", shape:"ring", text:"diconnected"});
         });
 	}
-	console.log("regstering deletepreset");
-	RED.nodes.registerType("deletepreset", eventMasterDeletePreset);
+	console.log("registered savepreset");
+	RED.nodes.registerType("savepreset", eventMasterDeletePreset);
 
 	function eventMasterListDestinations( n ) {
 
@@ -562,7 +560,7 @@ module.exports = function(RED) {
 			this.status({fill:"red", shape:"ring", text:"diconnected"});
         });
 	}
-	console.log("regstering listdestinations");
+	console.log("registered listdestinations");
 	RED.nodes.registerType("listdestinations", eventMasterListDestinations);
 
 
@@ -629,74 +627,6 @@ module.exports = function(RED) {
 			this.status({fill:"red", shape:"ring", text:"diconnected"});
         });
 	}
-	console.log("regstering listsources");
+	console.log("registered listsources");
 	RED.nodes.registerType("listsources", eventMasterListSources);
-
-
-	function eventMasterListContent( n ) {
-
-		RED.nodes.createNode(this, n);
-
-		var node = this;
-
-  		node.addr = n.addr;
-		node.port = n.port;
-		node.id = n.screeendestid || 0;
-
-		console.log(`listcontent id= ${node.id})`);
-
-		if (node.addr== "") {
-            node.warn("EventMaster: ip address not set");
-        } else if (node.port == 0) {
-            node.warn("EventMaster: port not set");
-        } else if (isNaN(node.port) || (node.port < 1) || (node.port > 65535)) {
-            node.warn("EventMaster: port number not valid");
-        } else if (node.id === -1) {
-        	node.warn("EventMaster: preset Id not valid");
-        } else {
-       
-			var options = {
-					host: '127.0.0.1',
-					port: 5858,
-					path: '/',
-					strict: true
-				};
-			options.host = node.addr;
-			options.port = node.port;
-
-			node.client = new rpc.Client(options);
-
-	        this.status({fill:"green", shape:"dot", text:"connected"});
-
-	        node.on("input", function( msg ) {
-
-	        	var err, res;
-
-	 			node.client.call(
-	      			{"jsonrpc": "2.0", "method": "listContent", "params": [node.id], "id": 1234},
-	      			function (err, res) {
-	          			// Did it all work ? 
-	          			if (err) { console.log(`listcontent - Error on JSON-RPC call ${err}`); }
-	          			else { 
-	          				var msg = { 
-	          					topic: "",
-	          					payload: res,
-	          					ip: node.addr,
-	          					port: node.port 
-	          				}; 
-	          				console.log(`listcontent - success!` ); 
-	          				node.send( msg);
-	          			}
-	          		}
-	        	);
-	     	});
-        }
-
-        node.on("close", function () {
-			this.status({fill:"red", shape:"ring", text:"diconnected"});
-        });
-	}
-	console.log("regstering listcontent");
-	RED.nodes.registerType("listcontent", eventMasterListContent);
-*/
 }

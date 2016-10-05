@@ -36,7 +36,7 @@
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
-    <div class="form-tips">Tip: Make sure your firewall will allow the data in.</div>
+    <div class="form-tips">Tip: Destination values are -2=Do not include any distringation of this type. -1=do not care. 0= Return presets with destinations that includes the specified id: .</div>
 </script>
 
 
@@ -64,7 +64,7 @@
         icon: "bridge-dash.png",
         align: "right",
         label: function() {
-            return this.name||"listpresets:"+(this.addr+":"+this.port);
+            return  this.name||"list presets:"+(this.addr+":"+this.port);
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
@@ -73,7 +73,7 @@
 </script>
 
 
-<!--  The listDestinationForPreset  node -->
+<!--  The listDestinationForPreset  node --
 <script type="text/x-red" data-template-name="listdestinationsforpreset">
     <div class="form-row">
         <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
@@ -116,14 +116,14 @@
         icon: "bridge-dash.png",
         align: "right",
         label: function() {
-            return this.name||"listdestinationsforpreset: "+(this.presetid);
+            return this.name||"list dests for preset: "+(this.presetid);
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
         }
     });
 </script>
-
+-->
 
 <script type="text/x-red" data-template-name="activatepreset">
     <div class="form-row">
@@ -172,7 +172,7 @@
         icon: "bridge-dash.png",
         align: "right",
         label: function() {
-            return this.name||"activatepreset: "+(this.presetid);
+            return this.name||"activate preset: "+(this.presetid);
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
@@ -211,7 +211,7 @@
         icon: "bridge-dash.png",
         align: "right",
         label: function() {
-            return this.name||"allTrans";
+            return this.name||"all trans";
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
@@ -258,7 +258,7 @@
     });
 </script>
 
-<!-- Delete Presets--
+<!-- Delete Presets-->
 <script type="text/x-red" data-template-name="deletepreset">
     <div class="form-row">
         <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
@@ -300,7 +300,7 @@
         icon: "bridge-dash.png",
         align: "right",
         label: function() {
-            return this.name||"deletepreset: "+(this.presetid);
+            return this.name||"delete preset: "+(this.presetid);
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
@@ -310,7 +310,7 @@
 
     
 
-script type="text/x-red" data-template-name="savepreset">
+<script type="text/x-red" data-template-name="savepreset">
     <div class="form-row">
         <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
         <input type="text" id="node-input-addr" placeholder="destination ip" style="width: 70%;">
@@ -365,15 +365,16 @@ script type="text/x-red" data-template-name="savepreset">
         icon: "bridge-dash.png",
         align: "right",
         label: function() {
-            return this.name||"savepreset: "+(this.presetname);
+            return this.name||"save preset: "+(this.presetname);
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
         }
     });
 </script>
--->
-<!--  The listdestinations node 
+
+<!-- The listdestinations node --
+
 <script type="text/x-red" data-template-name="listdestinations">
     <div class="form-row">
         <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
@@ -416,116 +417,14 @@ script type="text/x-red" data-template-name="savepreset">
         icon: "bridge-dash.png",
         align: "right",
         label: function() {
-            return this.name||"listdestinations: "+(this.type)
+            return this.name||"list destinations: "+(this.type)
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
         }
     });
 </script>
-
-
-
-<script type="text/x-red" data-template-name="listsources">
-    <div class="form-row">
-        <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
-        <input type="text" id="node-input-addr" placeholder="destination ip" style="width: 70%;">
-    </div>
-    <div class="form-row">
-        <label for="node-input-port" id="node-input-port-label"><i class="icon-list"></i> Port</label>
-        <input type="text" id="node-input-port" placeholder="destination port" style="width: 70%;">
-    </div>
-      <div class="form-row">
-        <label for="node-input-type" id="node-input-type-label"><i class="icon-list"></i> Source Type</label>
-        <input type="text" id="node-input-type" placeholder="destination type" style="width: 70%;">
-    </div>
-    <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-    <div class="form-tips">Tip: <b>Source Type</b> of 0 is Input and a type of 1 is the background</div>
-</script>
-
-<script type="text/x-red" data-help-name="listsources">
-    <p>Send messages to Barco EventMaster using JSON-RPC protocol.</p>
-    <p>This node sends <b>msg.payload</b> to the designated EventMaster host and port.</p>
-    <p>Returns JSON results in <b>msg.payload</b></p>
-    <p>On some systems you may need to be root to use ports below 1024 and/or broadcast.</p>
-</script>
-
-<script type="text/javascript">
-    RED.nodes.registerType('listsources',{
-        category: 'eventmaster',
-        color: "#E9967A",  
-        defaults: {
-           name: {value:""}, 
-           addr: {value:"localhost", required:true},
-           port: {value:"", required:true, validate:RED.validators.number()},
-           type: {value:"0", required:false, validate:RED.validators.number()}, 
-        },
-        inputs:1,
-        outputs:1,
-        icon: "bridge-dash.png",
-        align: "right",
-        label: function() {
-            return this.name||"listsources: "+(this.type)
-        },
-        labelStyle: function() {
-            return this.name?"node_label_italic":"";
-        }
-    });
-</script>
-
-
-
-<script type="text/x-red" data-template-name="listcontent">
-    <div class="form-row">
-        <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
-        <input type="text" id="node-input-addr" placeholder="destination ip" style="width: 70%;">
-    </div>
-    <div class="form-row">
-        <label for="node-input-port" id="node-input-port-label"><i class="icon-list"></i> Port</label>
-        <input type="text" id="node-input-port" placeholder="destination port" style="width: 70%;">
-    </div>
-        <div class="form-row">
-        <label for="node-input-screendestid" id="node-input-screendestid-label"><i class="icon-list"></i> Preset Id</label>
-        <input type="text" id="node-input-screendestid" placeholder="screen destination id" style="width: 70%;">
-    </div>
-    <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-    <div class="form-tips">Tip: <b>Source Type</b> of 0 is Input and a type of 1 is the background</div>
-</script>
-
-<script type="text/x-red" data-help-name="listcontent">
-    <p>Send messages to Barco EventMaster using JSON-RPC protocol.</p>
-    <p>This node sends <b>msg.payload</b> to the designated EventMaster host and port.</p>
-    <p>Returns JSON results in <b>msg.payload</b></p>
-    <p>On some systems you may need to be root to use ports below 1024 and/or broadcast.</p>
-</script>
-
-<script type="text/javascript">
-    RED.nodes.registerType('listcontent',{
-        category: 'eventmaster',
-        color: "#E9967A",  
-        defaults: {
-           name: {value:""}, 
-           addr: {value:"localhost", required:true},
-           port: {value:"", required:true, validate:RED.validators.number()},
-           screeendestid: {value:"0", required:false, validate:RED.validators.number()}, 
-        },
-        inputs:1,
-        outputs:1,
-        icon: "bridge-dash.png",
-        align: "right",
-        label: function() {
-            return this.name||"listcontent: "+(this.screeendestid)
-        },
-        labelStyle: function() {
-            return this.name?"node_label_italic":"";
-        }
-    });
-</script>
-
 -->
+
+
+

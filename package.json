@@ -13,16 +13,6 @@
       "C:\\Users\\robbi\\.node-red"
     ]
   ],
-  "_from": "node-red-contrib-barco-eventmaster@latest",
-  "_id": "node-red-contrib-barco-eventmaster@0.0.1",
-  "_inCache": true,
-  "_installable": true,
-  "_location": "/node-red-contrib-barco-eventmaster",
-  "_nodeVersion": "5.7.1",
-  "_npmOperationalInternal": {
-    "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/node-red-contrib-osc-0.0.6.tgz_1461881039309_0.04967801505699754"
-  },
   "_requiredBy": [
     "#USER"
   ],
@@ -45,7 +35,7 @@
     "e2",
     "node-red"
   ],
-  "license": "Apache-2.0",
+  "license": "MIT",
   "maintainers": [
     {
       "name": "Robbie Bruce",
@@ -58,8 +48,12 @@
       "eventmaster": "eventmaster.js"
     }
   },
+  
+  "scripts": {
+    "test": "node ./test/rpc.js"
+  },
   "optionalDependencies": {},
   "readme": "ERROR: No README data found!",
   "scripts": {},
-  "version": "0.0.1"
+  "version": "1.0.1"
 }
