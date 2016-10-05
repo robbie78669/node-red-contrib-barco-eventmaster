@@ -85,7 +85,7 @@ module.exports = function(RED) {
         });
 	}
 	RED.nodes.registerType("listpresets", eventMasterListPresets);
-	console.log("regstered list presets");
+	//console.log("regstered list presets");
 
 	function eventMasterListDestinationsForPreset( n ) {
 
@@ -153,7 +153,7 @@ module.exports = function(RED) {
         });
 	}
 	RED.nodes.registerType("listdestinationsforpreset", eventMasterListDestinationsForPreset);
-	console.log("registered listdestinationsforpreset");
+	//console.log("registered listdestinationsforpreset");
 
 	function eventMasterActivatePreset( n ) {
 
@@ -233,7 +233,7 @@ module.exports = function(RED) {
         });
 	}
 	RED.nodes.registerType("activatepreset", eventMasterActivatePreset);
-    console.log("registered activatepreset");
+    //console.log("registered activatepreset");
 	
 	function eventMasterAllTrans( n ) {
 
@@ -296,7 +296,7 @@ module.exports = function(RED) {
         });
 	}
     RED.nodes.registerType("allTrans", eventMasterAllTrans);
-    console.log("registered allTrans");
+    //console.log("registered allTrans");
 
 	function eventMasterCut( n ) {
 
@@ -360,7 +360,7 @@ module.exports = function(RED) {
         });
 	}
 	RED.nodes.registerType("cut", eventMasterCut);
-    console.log("registered cut");
+    //console.log("registered cut");
 
 	function eventMasterDeletePreset( n ) {
 
@@ -426,7 +426,7 @@ module.exports = function(RED) {
 			this.status({fill:"red", shape:"ring", text:"diconnected"});
         });
 	}
-	console.log("registered deletepreset");
+	//console.log("registered deletepreset");
 	RED.nodes.registerType("deletepreset", eventMasterDeletePreset);
 
 	function eventMasterSavePreset( n ) {
@@ -494,7 +494,7 @@ module.exports = function(RED) {
 			this.status({fill:"red", shape:"ring", text:"diconnected"});
         });
 	}
-	console.log("registered savepreset");
+	//console.log("registered savepreset");
 	RED.nodes.registerType("savepreset", eventMasterDeletePreset);
 
 	function eventMasterListDestinations( n ) {
@@ -560,7 +560,7 @@ module.exports = function(RED) {
 			this.status({fill:"red", shape:"ring", text:"diconnected"});
         });
 	}
-	console.log("registered listdestinations");
+	//console.log("registered listdestinations");
 	RED.nodes.registerType("listdestinations", eventMasterListDestinations);
 
 
@@ -627,6 +627,6 @@ module.exports = function(RED) {
 			this.status({fill:"red", shape:"ring", text:"diconnected"});
         });
 	}
-	console.log("registered listsources");
+	//console.log("registered listsources");
 	RED.nodes.registerType("listsources", eventMasterListSources);
 }
