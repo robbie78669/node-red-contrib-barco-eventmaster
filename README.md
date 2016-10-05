@@ -7,7 +7,7 @@ This then makes it easy to bridge between other protocols, for example OSC.
 ![screenshot](https://github.com/robbie78738/node-red-contrib-barco-eventmaster/raw/master/screenshot.png)
 
 
-##Installation
+## Installation
 
 Change to your node-red installation directory and then run:
 
