@@ -1,0 +1,65 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "node-red-contrib-barco-eventmaster",
+        "scope": null,
+        "escapedName": "node-red-contrib-barco-eventmaster",
+        "name": "node-red-contrib-barco-eventmaster",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\Users\\robbi\\.node-red"
+    ]
+  ],
+  "_from": "node-red-contrib-barco-eventmaster@latest",
+  "_id": "node-red-contrib-barco-eventmaster@0.0.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/node-red-contrib-barco-eventmaster",
+  "_nodeVersion": "5.7.1",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/node-red-contrib-osc-0.0.6.tgz_1461881039309_0.04967801505699754"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_shrinkwrap": null,
+  "_spec": "node-red-contrib-barco-eventmaster",
+  "_where": "C:\\Users\\robbi\\.node-red",
+  "author": {
+    "name": "Robbie Bruce",
+    "url": "http://www.barco.com/"
+  },
+  "dependencies": {
+    "node-json-rpc": "~0.0.1"
+  },
+  "description": "Barco EventMaster JSON-RP support for Node-REDC",
+  "devDependencies": {},
+  "directories": {},
+  "keywords": [
+    "Barco",
+    "EventMaster",
+    "e2",
+    "node-red"
+  ],
+  "license": "Apache-2.0",
+  "maintainers": [
+    {
+      "name": "Robbie Bruce",
+      "email": "robbie.bruce@barco.com"
+    }
+  ],
+  "name": "node-red-contrib-barco-eventmaster",
+  "node-red": {
+    "nodes": {
+      "eventmaster": "eventmaster.js"
+    }
+  },
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {},
+  "version": "0.0.1"
+}
