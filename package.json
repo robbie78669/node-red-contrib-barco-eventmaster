@@ -36,7 +36,7 @@
     "test": "node ./test/rpc.js"
   },
   "optionalDependencies": {},
-  "readme": "README",
+  "readme": "README.md",
   "scripts": {},
-  "version": "1.0.4"
+  "version": "1.0.5"
 }
