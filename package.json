@@ -26,6 +26,10 @@
   "dependencies": {
     "node-json-rpc": "~0.0.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robbie78738/node-red-contrib-barco-eventmaster.git"
+  },
   "description": "Barco EventMaster JSON-RP support for Node-REDC",
   "devDependencies": {},
   "directories": {},
