@@ -1,24 +1,4 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "node-red-contrib-barco-eventmaster",
-        "scope": null,
-        "escapedName": "node-red-contrib-barco-eventmaster",
-        "name": "node-red-contrib-barco-eventmaster",
-        "rawSpec": "",
-        "spec": "latest",
-        "type": "tag"
-      },
-      "C:\\Users\\robbi\\.node-red"
-    ]
-  ],
-  "_requiredBy": [
-    "#USER"
-  ],
-  "_shrinkwrap": null,
-  "_spec": "node-red-contrib-barco-eventmaster",
-  "_where": "C:\\Users\\robbi\\.node-red",
   "author": {
     "name": "Robbie Bruce",
     "url": "http://www.barco.com/"
@@ -52,12 +32,11 @@
       "eventmaster": "lib/eventmaster.js"
     }
   },
-  
   "scripts": {
     "test": "node ./test/rpc.js"
   },
   "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
+  "readme": "README.md",
   "scripts": {},
-  "version": "1.0.1"
+  "version": "1.0.0"
 }
