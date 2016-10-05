@@ -1,0 +1,6 @@
+{
+  "name": "Node-red-contrib-barco-eventmaster",
+  "tagline": "Node-Red EventMaster Nodes ",
+  "body": "# node-red-contrib-barco-eventmaster\r\n\r\nThe *node-red-contrib-barco-eventmaster* module adds support to [Node-RED](http://nodered.org/) for sending and receiving JSON-RPC messages to Barco Event Master devices.\r\n\r\nThis then makes it easy to bridge between other protocols, for example OSC.\r\n\r\n![screenshot](https://github.com/robbie78738/node-red-contrib-barco-eventmaster/raw/master/screenshot.png)\r\n\r\n\r\n## Installation\r\n\r\nChange to your node-red installation directory and then run:\r\n\r\n    npm install node-red-contrib-barco-eventmaster\r\n    \r\nYou will then be able to see a new node category with additional nodes added to Node-RED's pallet on the left.\r\n\r\n\r\nCopyright and license\r\n---------------------\r\n\r\nCopyright 2016 Robbie Bruce under [the Apache 2.0 license](LICENSE).\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
