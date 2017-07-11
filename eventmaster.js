@@ -19,7 +19,7 @@
 module.exports = function(RED) {
 
 	"use strict";
-	var rpc = require('node-json-rpc');
+	var rpc = require('json-rpc2');
 
 	function eventMasterListPresets( n ) {
 
@@ -33,8 +33,6 @@ module.exports = function(RED) {
 		node.screenDest = n.srcdest || -1;
 		node.auxDest = n.auxdest || -1;
 
-		console.log(`listPreset (screendest= ${node.screenDest}, ausDest= ${node.auxDest})`);
-
 		if (node.addr== "") {
             node.warn("EventMaster: ip address not set");
         } else if (node.port == 0) {
@@ -43,27 +41,15 @@ module.exports = function(RED) {
             node.warn("EventMaster: port number not valid");
         } else {
        
-			var options = {
-					host: '127.0.0.1',
-					port: 5858,
-					path: '/',
-					strict: true
-				};
-			options.host = node.addr;
-			options.port = node.port;
-
-			node.client = new rpc.Client(options);
+			node.client = rpc.Client.$create(node.port, node.addr);
 
 	        this.status({fill:"green", shape:"dot", text:"connected"});
 
 	        node.on("input", function( msg ) {
 
-	        	var err, res;
-
-	 			node.client.call(
-	      			{"jsonrpc": "2.0", "method": "listPresets", "params": [node.screenDest,node.auxDest], "id": 1234},
+		        	node.client.call( 'listPresets', [{"ScreenDest": node.screenDest, "AuxDest" : node.AuxDest }],
 	      			function (err, res) {
-	          			// Did it all work ? 
+	          			// Did it work ? 
 	          			if (err) { console.log(`listPreset - Error on JSON-RPC call ${err}`); }
 	          			else { 
 	          				var msg = { 
@@ -76,84 +62,16 @@ module.exports = function(RED) {
 	          				node.send( msg);
 	          			}
 	          		}
-	        	);
+	        	); 
 	     	});
+	     	
         }
 
         node.on("close", function () {
 			this.status({fill:"red", shape:"ring", text:"diconnected"});
         });
 	}
-	RED.nodes.registerType("listpresets", eventMasterListPresets);
-	//console.log("regstered list presets");
-
-	function eventMasterListDestinationsForPreset( n ) {
-
-		RED.nodes.createNode(this, n);
-
-		var node = this;
-
-  		node.addr = n.addr;
-		node.port = n.port;
-		node.presetid = n.presetid || -1;
-		
-
-		console.log(` id= ${node.id}`);
-
-		if (node.addr== "") {
-            node.warn("EventMaster: ip address not set");
-        } else if (node.port == 0) {
-            node.warn("EventMaster: port not set");
-        } else if (isNaN(node.port) || (node.port < 1) || (node.port > 65535)) {
-            node.warn("EventMaster: port number not valid");
-        } else {
-       
-			var options = {
-					host: '127.0.0.1',
-					port: 5858,
-					path: '/',
-					strict: true
-				};
-			options.host = node.addr;
-			options.port = node.port;
-
-			node.client = new rpc.Client(options);
-
-			console.log("listdestinationsforpreset caling status green");
-	        this.status({fill:"green", shape:"dot", text:"connected"});
-
-	        var id = node.presetid;
-
-	        node.on("input", function( msg ) {
-
-	        	var err, res;
-
-	 			node.client.call(
-	      			{"jsonrpc": "2.0", "method": "listDestinationsForPreset", "params": [id], "id": 1234},
-	      			function (err, res) {
-	          			// Did it all work ? 
-	          			if (err) { console.log(`listdestinationsforpreset - Error on JSON-RPC call ${err}`); }
-	          			else { 
-	          				var msg = { 
-	          					topic: "",
-	          					payload: res,
-	          					ip: node.addr,
-	          					port: node.port 
-	          				}; 
-	          				console.log(`listdestinationsforpreset - success!` ); 
-	          				node.send( msg);
-	          			}
-	          		}
-	        	);
-	     	});
-        }
-
-        node.on("close", function () {
-			this.status({fill:"red", shape:"ring", text:"diconnected"});
-        });
-	}
-	RED.nodes.registerType("listdestinationsforpreset", eventMasterListDestinationsForPreset);
-	//console.log("registered listdestinationsforpreset");
+	RED.nodes.registerType("presets", eventMasterListPresets);
 
 	function eventMasterActivatePreset( n ) {
 
@@ -167,8 +85,6 @@ module.exports = function(RED) {
 		node.presettype = n.presettype || 0;
 
 
-		console.log(`activatepreset id= ${node.presetid}, type= ${node.presettype})`);
-
 		if (node.addr== "") {
             node.warn("EventMaster: ip address not set");
         } else if (node.port == 0) {
@@ -179,16 +95,7 @@ module.exports = function(RED) {
         	node.warn("EventMaster: preset Id not valid");
         } else {
        
-			var options = {
-					host: '127.0.0.1',
-					port: 5858,
-					path: '/',
-					strict: true
-				};
-			options.host = node.addr;
-			options.port = node.port;
-
-			node.client = new rpc.Client(options);
+			node.client = rpc.Client.$create(node.port, node.addr);
 
 	        this.status({fill:"green", shape:"dot", text:"connected"});
 
@@ -208,8 +115,7 @@ module.exports = function(RED) {
 					}
 				} 
 
-	 			node.client.call(
-	      			{"jsonrpc": "2.0", "method": "activatePreset", "params": [id,type], "id": 1234},
+	 			node.client.call('activatePreset', [id,type],
 	      			function (err, res) {
 	          			// Did it all work ? 
 	          			if (err) { console.log(`activatePreset - Error on JSON-RPC call ${err}`); }
@@ -254,16 +160,7 @@ module.exports = function(RED) {
             node.warn("EventMaster: port number not valid");
         } else {
        
-			var options = {
-					host: '127.0.0.1',
-					port: 5858,
-					path: '/',
-					strict: true
-				};
-			options.host = node.addr;
-			options.port = node.port;
-
-			node.client = new rpc.Client(options);
+			node.client = rpc.Client.$create(node.port, node.addr);
 
 	        this.status({fill:"green", shape:"dot", text:"connected"});
 
@@ -271,8 +168,7 @@ module.exports = function(RED) {
 
 	        	var err, res;
 	    
-	 			node.client.call(
-	      			{"jsonrpc": "2.0", "method": "allTrans", "params": [], "id": 1234},
+	 			node.client.call('allTrans', [], 
 	      			function (err, res) {
 	          			// Did it all work ? 
 	          			if (err) { console.log(`allTrans - Error on JSON-RPC call ${err}`); }
@@ -296,8 +192,7 @@ module.exports = function(RED) {
         });
 	}
     RED.nodes.registerType("allTrans", eventMasterAllTrans);
-    //console.log("registered allTrans");
-
+    
 	function eventMasterCut( n ) {
 
 		RED.nodes.createNode(this, n);
@@ -307,9 +202,6 @@ module.exports = function(RED) {
   		node.addr = n.addr;
 		node.port = n.port;
 
-	    
-		console.log(`allTrans`);
-
 		if (node.addr== "") {
             node.warn("EventMaster: ip address not set");
         } else if (node.port == 0) {
@@ -317,17 +209,8 @@ module.exports = function(RED) {
         } else if (isNaN(node.port) || (node.port < 1) || (node.port > 65535)) {
             node.warn("EventMaster: port number not valid");
         } else {
-       
-			var options = {
-					host: '127.0.0.1',
-					port: 5858,
-					path: '/',
-					strict: true
-				};
-			options.host = node.addr;
-			options.port = node.port;
-
-			node.client = new rpc.Client(options);
+ 
+			node.client = rpc.Client.$create(node.port, node.addr);
 
 	        this.status({fill:"green", shape:"dot", text:"connected"});
 
@@ -335,8 +218,7 @@ module.exports = function(RED) {
 
 	        	var err, res;
 	    
-	 			node.client.call(
-	      			{"jsonrpc": "2.0", "method": "cut", "params": [], "id": 1234},
+	 			node.client.call('cut', [], 
 	      			function (err, res) {
 	          			// Did it all work ? 
 	          			if (err) { console.log(`cut - Error on JSON-RPC call ${err}`); }
@@ -360,143 +242,7 @@ module.exports = function(RED) {
         });
 	}
 	RED.nodes.registerType("cut", eventMasterCut);
-    //console.log("registered cut");
-
-	function eventMasterDeletePreset( n ) {
-
-		RED.nodes.createNode(this, n);
-
-		var node = this;
-
-  		node.addr = n.addr;
-		node.port = n.port;
-		node.presetid = n.presetid || -1;
-		
-		console.log(`deletepreset id= ${node.presetid}`);
-
-		if (node.addr== "") {
-            node.warn("EventMaster: ip address not set");
-        } else if (node.port == 0) {
-            node.warn("EventMaster: port not set");
-        } else if (isNaN(node.port) || (node.port < 1) || (node.port > 65535)) {
-            node.warn("EventMaster: port number not valid");
-        } else if (node.id === -1) {
-        	node.warn("EventMaster: preset Id not valid");
-        } else {
-       
-			var options = {
-					host: '127.0.0.1',
-					port: 5858,
-					path: '/',
-					strict: true
-				};
-			options.host = node.addr;
-			options.port = node.port;
-
-			node.client = new rpc.Client(options);
-
-	        this.status({fill:"green", shape:"dot", text:"connected"});
-
-	        node.on("input", function( msg ) {
-
-	        	var err, res;
-	        	var id = node.presetid;
-
-	 			node.client.call(
-	      			{"jsonrpc": "2.0", "method": "deletePreset", "params": [id], "id": 1234},
-	      			function (err, res) {
-	          			// Did it all work ? 
-	          			if (err) { console.log(`deletepreset - Error on JSON-RPC call ${err}`); }
-	          			else { 
-	          				var msg = { 
-	          					topic: "",
-	          					payload: res,
-	          					ip: node.addr,
-	          					port: node.port 
-	          				}; 
-	          				console.log(`deletepreset - success!` ); 
-	          				node.send( msg);
-	          			}
-	          		}
-	        	);
-	     	});
-        }
-
-        node.on("close", function () {
-			this.status({fill:"red", shape:"ring", text:"diconnected"});
-        });
-	}
-	//console.log("registered deletepreset");
-	RED.nodes.registerType("deletepreset", eventMasterDeletePreset);
-
-	function eventMasterSavePreset( n ) {
-
-		RED.nodes.createNode(this, n);
-
-		var node = this;
-
-  		node.addr = n.addr;
-		node.port = n.port;
-		node.presetid = n.presetid || -1;
-		node.presettype = n.presettype || 0;
-		node.presetName = n.presetName;
-		node.screenDest = n.screenDestination;
-		
-		console.log(`savepreset id= ${node.presetid}`);
-
-		if (node.addr== "") {
-            node.warn("EventMaster: ip address not set");
-        } else if (node.port == 0) {
-            node.warn("EventMaster: port not set");
-        } else if (isNaN(node.port) || (node.port < 1) || (node.port > 65535)) {
-            node.warn("EventMaster: port number not valid");
-        } else {
-       
-			var options = {
-					host: '127.0.0.1',
-					port: 5858,
-					path: '/',
-					strict: true
-				};
-			options.host = node.addr;
-			options.port = node.port;
-
-			node.client = new rpc.Client(options);
-
-	        this.status({fill:"green", shape:"dot", text:"connected"});
-
-	        node.on("input", function( msg ) {
-
-	        	var err, res;
-	        	var id = node.presetid;
-
-	 			node.client.call(
-	      			{"jsonrpc": "2.0", "method": "savePreset", "params": [id], "id": 1234},
-	      			function (err, res) {
-	          			// Did it all work ? 
-	          			if (err) { console.log(`savepreset - Error on JSON-RPC call ${err}`); }
-	          			else { 
-	          				var msg = { 
-	          					topic: "",
-	          					payload: res,
-	          					ip: node.addr,
-	          					port: node.port 
-	          				}; 
-	          				console.log(`savepreset - success!` ); 
-	          				node.send( msg);
-	          			}
-	          		}
-	        	);
-	     	});
-        }
-
-        node.on("close", function () {
-			this.status({fill:"red", shape:"ring", text:"diconnected"});
-        });
-	}
-	//console.log("registered savepreset");
-	RED.nodes.registerType("savepreset", eventMasterDeletePreset);
-
+    
 	function eventMasterListDestinations( n ) {
 
 		RED.nodes.createNode(this, n);
@@ -505,9 +251,7 @@ module.exports = function(RED) {
 
   		node.addr = n.addr;
 		node.port = n.port;
-		node.type = n.type || 0;
-
-		console.log(`listdestinations type= ${node.type})`);
+		node.type = n.desttype || 0;
 
 		if (node.addr== "") {
             node.warn("EventMaster: ip address not set");
@@ -515,20 +259,9 @@ module.exports = function(RED) {
             node.warn("EventMaster: port not set");
         } else if (isNaN(node.port) || (node.port < 1) || (node.port > 65535)) {
             node.warn("EventMaster: port number not valid");
-        } else if (node.id === -1) {
-        	node.warn("EventMaster: preset Id not valid");
         } else {
        
-			var options = {
-					host: '127.0.0.1',
-					port: 5858,
-					path: '/',
-					strict: true
-				};
-			options.host = node.addr;
-			options.port = node.port;
-
-			node.client = new rpc.Client(options);
+			node.client = rpc.Client.$create(node.port, node.addr);
 
 	        this.status({fill:"green", shape:"dot", text:"connected"});
 
@@ -536,8 +269,7 @@ module.exports = function(RED) {
 
 	        	var err, res;
 
-	 			node.client.call(
-	      			{"jsonrpc": "2.0", "method": "listDestinations", "params": [node.type], "id": 1234},
+	 			node.client.call('listDestinations', [node.type],
 	      			function (err, res) {
 	          			// Did it all work ? 
 	          			if (err) { console.log(`listdestinations - Error on JSON-RPC call ${err}`); }
@@ -561,7 +293,7 @@ module.exports = function(RED) {
         });
 	}
 	//console.log("registered listdestinations");
-	RED.nodes.registerType("listdestinations", eventMasterListDestinations);
+	RED.nodes.registerType("destinations", eventMasterListDestinations);
 
 
 	function eventMasterListSources( n ) {
@@ -572,30 +304,17 @@ module.exports = function(RED) {
 
   		node.addr = n.addr;
 		node.port = n.port;
-		node.type = n.type || 0;
-
-		console.log(`listsources type= ${node.type})`);
-
+		node.type = n.sourcetype || 0;
+	
 		if (node.addr== "") {
             node.warn("EventMaster: ip address not set");
         } else if (node.port == 0) {
             node.warn("EventMaster: port not set");
         } else if (isNaN(node.port) || (node.port < 1) || (node.port > 65535)) {
             node.warn("EventMaster: port number not valid");
-        } else if (node.id === -1) {
-        	node.warn("EventMaster: preset Id not valid");
         } else {
        
-			var options = {
-					host: '127.0.0.1',
-					port: 5858,
-					path: '/',
-					strict: true
-				};
-			options.host = node.addr;
-			options.port = node.port;
-
-			node.client = new rpc.Client(options);
+			node.client = rpc.Client.$create(node.port, node.addr);
 
 	        this.status({fill:"green", shape:"dot", text:"connected"});
 
@@ -603,8 +322,7 @@ module.exports = function(RED) {
 
 	        	var err, res;
 
-	 			node.client.call(
-	      			{"jsonrpc": "2.0", "method": "listSources", "params": [node.type], "id": 1234},
+	 			node.client.call('listSources', [node.type],
 	      			function (err, res) {
 	          			// Did it all work ? 
 	          			if (err) { console.log(`listsources - Error on JSON-RPC call ${err}`); }
@@ -628,5 +346,5 @@ module.exports = function(RED) {
         });
 	}
 	//console.log("registered listsources");
-	RED.nodes.registerType("listsources", eventMasterListSources);
+	RED.nodes.registerType("sources", eventMasterListSources);
 }

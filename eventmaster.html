@@ -14,117 +14,10 @@
   limitations under the License.
 -->
 
-<!--  The listPresets Output Node  -->
-<script type="text/x-red" data-template-name="listpresets">
-    <div class="form-row">
-        <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
-        <input type="text" id="node-input-addr" placeholder="destination ip" style="width: 70%;">
-    </div>
-    <div class="form-row">
-        <label for="node-input-port" id="node-input-port-label"><i class="icon-list"></i> Port</label>
-        <input type="text" id="node-input-port" placeholder="destination port" style="width: 70%;">
-    </div>
-    <div class="form-row">
-        <label for="node-input-srcdest" id="node-input-srcdest-label"><i class="icon-list"></i> Screen Destination</label>
-        <input type="text" id="node-input-srcdest" placeholder="screen destination" style="width: 70%;">
-    </div>
-    <div class="form-row">
-        <label for="node-input-auxdest" id="node-input-auxdest-label"><i class="icon-list"></i> Aux Destination</label>
-        <input type="text" id="node-input-auxdest" placeholder="aux destination" style="width: 70%;">
-    </div>
-    <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-    <div class="form-tips">Tip: Destination values are -2=Do not include any distringation of this type. -1=do not care. 0= Return presets with destinations that includes the specified id: .</div>
-</script>
 
 
-<script type="text/x-red" data-help-name="listpresets">
-    <p>Send messages to Barco EventMaster using JSON-RPC protocol.</p>
-    <p>This node sends <b>msg.payload</b> to the designated EventMaster host and port.</p>
-    <p>Returns JSON results in <b>msg.payload</b></p>
-    <p>On some systems you may need to be root to use ports below 1024 and/or broadcast.</p>
-</script>
 
-
-<script type="text/javascript">
-    RED.nodes.registerType('listpresets',{
-        category: 'eventmaster',
-        color: "#E9967A",  
-        defaults: {
-            name: {value:""},
-            addr: {value:"localhost", required:true},
-            port: {value:"9999", required:true, validate:RED.validators.number()},
-            srcdest: {value:"-1", required:true, validate:RED.validators.number()},
-            auxdest: {value:"-1", required:true, validate:RED.validators.number()}
-        },
-        inputs:1,
-        outputs:1,
-        icon: "bridge-dash.png",
-        align: "right",
-        label: function() {
-            return  this.name||"list presets:"+(this.addr+":"+this.port);
-        },
-        labelStyle: function() {
-            return this.name?"node_label_italic":"";
-        }
-    });
-</script>
-
-
-<!--  The listDestinationForPreset  node --
-<script type="text/x-red" data-template-name="listdestinationsforpreset">
-    <div class="form-row">
-        <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
-        <input type="text" id="node-input-addr" placeholder="destination ip" style="width: 70%;">
-    </div>
-    <div class="form-row">
-        <label for="node-input-port" id="node-input-port-label"><i class="icon-list"></i> Port</label>
-        <input type="text" id="node-input-port" placeholder="destination port" style="width: 70%;">
-    </div>
-      <div class="form-row">
-        <label for="node-input-presetid" id="node-input-presetid-label"><i class="icon-list"></i> Preset Id</label>
-        <input type="text" id="node-input-presetid" placeholder="preset id" style="width: 70%;">
-    </div>
-    <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-    <div class="form-tips">Tip: Set Preset Id to -1 to list all presets .</div>
-</script>
-
-<script type="text/x-red" data-help-name="listdestinationsforpreset">
-    <p>Send messages to Barco EventMaster using JSON-RPC protocol.</p>
-    <p>This node sends <b>msg.payload</b> to the designated EventMaster host and port.</p>
-    <p>Returns JSON results in <b>msg.payload</b></p>
-    <p>On some systems you may need to be root to use ports below 1024 and/or broadcast.</p>
-</script>
-
-<script type="text/javascript">
-    RED.nodes.registerType('listdestinationsforpreset',{
-        category: 'eventmaster',
-        color: "#E9967A",  
-        defaults: {
-           name: {value:""}, 
-           addr: {value:"localhost", required:true},
-           port: {value:"9999", required:true, validate:RED.validators.number()},
-           presetid: {value:"-1", required:true, validate:RED.validators.number()},
-        },
-        inputs:1,
-        outputs:1,
-        icon: "bridge-dash.png",
-        align: "right",
-        label: function() {
-            return this.name||"list dests for preset: "+(this.presetid);
-        },
-        labelStyle: function() {
-            return this.name?"node_label_italic":"";
-        }
-    });
-</script>
--->
-
+<!--  The activate Presets Output Node  -->
 <script type="text/x-red" data-template-name="activatepreset">
     <div class="form-row">
         <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
@@ -146,9 +39,8 @@
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
-    <div class="form-tips">Tip: Set Recall Mode to 0 to recall into Preview otherwise 1 to recall into Program .</div>
+    <div class="form-tips">Tip: Set Recall Mode to 0 to recall into Preview otherwise 1 to recall into Program.</div>
 </script>
-
 <script type="text/x-red" data-help-name="activatepreset">
     <p>Send messages to Barco EventMaster using JSON-RPC protocol.</p>
     <p>This node sends <b>msg.payload</b> to the designated EventMaster host and port.</p>
@@ -156,7 +48,6 @@
     <p>On some systems you may need to be root to use ports below 1024 and/or broadcast.</p>
     <p>As an input node, set <b>msg.topic</b> to <b>Preview</b> or <b>Program</b> with the preset id defined in <b>msg.payload</b></p>
 </script>
-
 <script type="text/javascript">
     RED.nodes.registerType('activatepreset',{
         category: 'eventmaster',
@@ -181,6 +72,8 @@
     });
 </script>
 
+
+<!--  The allTrans Output Node  -->
 <script type="text/x-red" data-template-name="allTrans">
     <div class="form-row">
         <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
@@ -220,6 +113,7 @@
     });
 </script>
 
+<!--  cut Output Node  -->
 <script type="text/x-red" data-template-name="cut">
     <div class="form-row">
         <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
@@ -229,14 +123,12 @@
         <label for="node-input-port" id="node-input-port-label"><i class="icon-list"></i> Port</label>
         <input type="text" id="node-input-port" placeholder="destination port" style="width: 70%;">
 </script>
-
 <script type="text/x-red" data-help-name="cut">
     <p>Send messages to Barco EventMaster using JSON-RPC protocol.</p>
     <p>This node sends <b>msg.payload</b> to the designated EventMaster host and port.</p>
     <p>Returns JSON results in <b>msg.payload</b></p>
     <p>On some systems you may need to be root to use ports below 1024 and/or broadcast.</p>
 </script>
-
 <script type="text/javascript">
     RED.nodes.registerType('cut',{
         category: 'eventmaster',
@@ -259,27 +151,32 @@
     });
 </script>
 
-<!-- Delete Presets-->
-<script type="text/x-red" data-template-name="deletepreset">
+
+<!--
+<script type="text/x-red" data-template-name="presets">
     <div class="form-row">
         <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
         <input type="text" id="node-input-addr" placeholder="destination ip" style="width: 70%;">
     </div>
     <div class="form-row">
         <label for="node-input-port" id="node-input-port-label"><i class="icon-list"></i> Port</label>
-        <input type="text" id="node-input-port" placeholder="destinationport" style="width: 70%;">
+        <input type="text" id="node-input-port" placeholder="destination port" style="width: 70%;">
     </div>
     <div class="form-row">
-        <label for="node-input-presetid" id="node-input-presetid-label"><i class="icon-list"></i> Preset Id</label>
-        <input type="text" id="node-input-presetid" placeholder="preset id" style="width: 70%;">
+        <label for="node-input-srcdest" id="node-input-srcdest-label"><i class="icon-list"></i> Screen Destination</label>
+        <input type="text" id="node-input-srcdest" placeholder="screen destination" style="width: 70%;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-auxdest" id="node-input-auxdest-label"><i class="icon-list"></i> Aux Destination</label>
+        <input type="text" id="node-input-auxdest" placeholder="aux destination" style="width: 70%;">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
+    <div class="form-tips">Tip: Destination values are -2=Do not include any distringation of this type. -1=do not care. 0= Return presets with destinations that includes the specified id: .</div>
 </script>
-
-<script type="text/x-red" data-help-name="deletepreset">
+<script type="text/x-red" data-help-name="presets">
     <p>Send messages to Barco EventMaster using JSON-RPC protocol.</p>
     <p>This node sends <b>msg.payload</b> to the designated EventMaster host and port.</p>
     <p>Returns JSON results in <b>msg.payload</b></p>
@@ -287,21 +184,22 @@
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('deletepreset',{
+    RED.nodes.registerType('presets',{
         category: 'eventmaster',
         color: "#E9967A",  
         defaults: {
-           name: {value:""}, 
-           addr: {value:"localhost", required:true},
-           port: {value:"", required:true, validate:RED.validators.number()},
-           presetid: {value:"", required:true, validate:RED.validators.number()},
+            name: {value:""},
+            addr: {value:"localhost", required:true},
+            port: {value:"9999", required:true, validate:RED.validators.number()},
+            srcdest: {value:"-1", required:true, validate:RED.validators.number()},
+            auxdest: {value:"-1", required:true, validate:RED.validators.number()}
         },
         inputs:1,
         outputs:1,
         icon: "bridge-dash.png",
         align: "right",
         label: function() {
-            return this.name||"delete preset: "+(this.presetid);
+            return  this.name||"presets:"+(this.addr+":"+this.port);
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
@@ -309,9 +207,8 @@
     });
 </script>
 
-    
 
-<script type="text/x-red" data-template-name="savepreset">
+<script type="text/x-red" data-template-name="sources">
     <div class="form-row">
         <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
         <input type="text" id="node-input-addr" placeholder="destination ip" style="width: 70%;">
@@ -321,52 +218,34 @@
         <input type="text" id="node-input-port" placeholder="destination port" style="width: 70%;">
     </div>
       <div class="form-row">
-        <label for="node-input-presetid" id="node-input-presetid-label"><i class="icon-list"></i> Preset Id</label>
-        <input type="text" id="node-input-presetid" placeholder="preset id" style="width: 70%;">
+        <label for="node-input-sourcetype" id="node-input-sourcetype-label"><i class="icon-list"></i> Source Type</label>
+        <input type="text" id="node-input-sourcetype" placeholder="source type" style="width: 70%;">
     </div>
-    <div class="form-row">/
-        <label for="node-input-presettype" id="node-inpuut-presettype-label"><i class="icon-list"></i> Save Mode</label>
-        <input type="text" id="node-input-presettype" placeholder="recall type" style="width: 70%;">
-    </div>
-    <div class="form-row">/
-        <label for="node-input-screendestination" id="node-input-screendestination-label"><i class="icon-list"></i> Screen Destination</label>
-        <input type="text" id="node-input-screendestination" placeholder="screen dest" style="width: 70%;">
-    </div>
-    <div class="form-row">/
-        <label for="node-input-presetname" id="node-inpuut-presetname-label"><i class="icon-list"></i> Preset Name</label>
-        <input type="text" id="node-input-presetname" placeholder="save preset" style="width: 70%;">
-    </div>
-    <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-    <div class="form-tips">Tip: Set Save Mode to 0 from Preview otherwise 1 from Program.</div>
+    <div class="form-tips">Tip: Source Type of 0 lists all sources and 1 is Background only</div>
 </script>
-
-<script type="text/x-red" data-help-name="savepreset">
+<script type="text/x-red" data-help-name="sources">
     <p>Send messages to Barco EventMaster using JSON-RPC protocol.</p>
     <p>This node sends <b>msg.payload</b> to the designated EventMaster host and port.</p>
     <p>Returns JSON results in <b>msg.payload</b></p>
-    <p>On some systems you may need to be root to se ports below 1>
-
+    <p>On some systems you may need to be root to use ports below 1024 and/or broadcast.</p>
+    <p>As an input node, set <b>msg.topic</b> to <b>Preview</b> or <b>Program</b> with the preset id defined in <b>msg.payload</b></p>
+</script>
 <script type="text/javascript">
-    RED.nodes.registerType('savepreset',{
+    RED.nodes.registerType('sources',{
         category: 'eventmaster',
         color: "#E9967A",  
         defaults: {
            name: {value:""}, 
            addr: {value:"localhost", required:true},
-           port: {value:"", required:true, validate:RED.validators.number()},
-           presetid: {value:-1, required:true, validate:RED.validators.number()},
-           presettype: {value:"0", required:true, validate:RED.validators.number()},
-           presetname: {value:"", required:true},
+           port: {value:"9999", required:true, validate:RED.validators.number()},
+           sourcetype: {value:"0", required:true, validate:RED.validators.number()}
         },
         inputs:1,
         outputs:1,
         icon: "bridge-dash.png",
         align: "right",
         label: function() {
-            return this.name||"save preset: "+(this.presetname);
+            return this.name||"sources: "+(this.presetid);
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
@@ -374,51 +253,45 @@
     });
 </script>
 
-<!-- The listdestinations node --
 
-<script type="text/x-red" data-template-name="listdestinations">
+<script type="text/x-red" data-template-name="destinations">
     <div class="form-row">
         <label for="node-input-addr" id="node-input-addr-label"><i class="icon-list"></i> Address</label>
-        <input type="text" id="node-input-addrthis.presetnameholder="destination ip" style="width: 70%;">
+        <input type="text" id="node-input-addr" placeholder="destination ip" style="width: 70%;">
     </div>
     <div class="form-row">
         <label for="node-input-port" id="node-input-port-label"><i class="icon-list"></i> Port</label>
         <input type="text" id="node-input-port" placeholder="destination port" style="width: 70%;">
     </div>
       <div class="form-row">
-        <label for="node-input-type" id="node-input-type-label"><i class="icon-list"></i> Destination Type</label>
-        <input type="text" id="node-input-type" placeholder="destination type" style="width: 70%;">
+        <label for="node-input-desttype" id="node-input-desttype-label"><i class="icon-list"></i> Destination Type</label>
+        <input type="text" id="node-input-desttype" placeholder="destination type" style="width: 70%;">
     </div>
-    <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-    <div class="form-tips">Tip: <b>Destination Type</b> of 0 lists both Screen and AUX,  a type of 1 is Screen Only, and 2 is AUX only</div>
+    <div class="form-tips">Tip: Source Type of 0 lists all sources and 1 is Background only</div>
 </script>
-
-<script type="text/x-red" data-help-name="listdestinations">
+<script type="text/x-red" data-help-name="destinations">
     <p>Send messages to Barco EventMaster using JSON-RPC protocol.</p>
     <p>This node sends <b>msg.payload</b> to the designated EventMaster host and port.</p>
     <p>Returns JSON results in <b>msg.payload</b></p>
     <p>On some systems you may need to be root to use ports below 1024 and/or broadcast.</p>
+    <p>As an input node, set <b>msg.topic</b> to <b>Preview</b> or <b>Program</b> with the preset id defined in <b>msg.payload</b></p>
 </script>
-
 <script type="text/javascript">
-    RED.nodes.registerType('listdestinations',{
+    RED.nodes.registerType('destinations',{
         category: 'eventmaster',
         color: "#E9967A",  
         defaults: {
            name: {value:""}, 
            addr: {value:"localhost", required:true},
-           port: {value:"", required:true, validate:RED.validators.number()},
-           type: {value:"0", required:false, validate:RED.validators.number()}, 
+           port: {value:"9999", required:true, validate:RED.validators.number()},
+           desttype: {value:"0", required:true, validate:RED.validators.number()}
         },
         inputs:1,
         outputs:1,
         icon: "bridge-dash.png",
         align: "right",
         label: function() {
-            return this.name||"list destinations: "+(this.type)
+            return this.name||"destinations: "+(this.presetid);
         },
         labelStyle: function() {
             return this.name?"node_label_italic":"";
@@ -426,6 +299,3 @@
     });
 </script>
 -->
-
-
-

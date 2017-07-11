@@ -4,8 +4,8 @@
     "url": "http://www.barco.com/"
   },
   "dependencies": {
-    "node-json-rpc": "~0.0.1"
-  },
+    "json-rpc2": "^1.0.2"
+    },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/robbie78738/node-red-contrib-barco-eventmaster.git"
@@ -32,11 +32,8 @@
       "eventmaster": "eventmaster.js"
     }
   },
-  "scripts": {
-    "test": "node ./test/rpc.js"
-  },
+  "scripts": {},
   "optionalDependencies": {},
   "readme": "README.md",
-  "scripts": {},
-  "version": "1.0.8"
+  "version": "1.1.0"
 }
